@@ -11,11 +11,15 @@ const EditTicket = () => {
   const { state } = useLocation();
 
   const fetchTicket = async (ticketId: TicketData) => {
-    try {
-      const data = await retrieveTicket(ticketId.id);
-      setTicket(data);
-    } catch (err) {
-      console.error('Failed to retrieve ticket:', err);
+    if (ticketId.id !== null) {
+      try {
+        const data = await retrieveTicket(ticketId.id);
+        setTicket(data);
+      } catch (err) {
+        console.error('Failed to retrieve ticket:', err);
+      }
+    } else {
+      console.error('Ticket ID is null.');
     }
   }
 
