@@ -69,7 +69,7 @@ const Login = () => {
         />
         
         <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Submit Form'}
+          {isLoading ? 'Logging in...' : 'Submit'}
         </button>
       </form>
     </div>
