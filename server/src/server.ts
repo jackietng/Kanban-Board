@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,8 +30,17 @@ app.get('*', (_req, res) => {
 });
 
 // Sync database and start server
-sequelize.sync({force: forceDatabaseRefresh}).then(() => {
-  app.listen(PORT, () => {
+sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
+  const server = app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
+  });
+
+  server.on('error', (err: NodeJS.ErrnoException) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${PORT} is already in use. Please use a different port.`);
+    } else {
+      console.error('Server error:', err);
+    }
+    process.exit(1); // Exit the process to avoid a hanging server
   });
 });

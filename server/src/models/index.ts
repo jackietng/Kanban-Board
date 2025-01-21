@@ -1,35 +1,58 @@
 import dotenv from 'dotenv';
-dotenv.config();  // Load environment variables from .env file
-
-console.log('Database URL:', process.env.DB_URL);
-console.log('Database Name:', process.env.DB_NAME);
-console.log('Database User:', process.env.DB_USER);
-console.log('Database Password:', process.env.DB_PASSWORD);
+dotenv.config();
 
 import { Sequelize } from 'sequelize';
 import { UserFactory } from './user.js';
 import { TicketFactory } from './ticket.js';
 
-// Initialize Sequelize with environment variables for database connection
-const sequelize = process.env.DB_URL
-  ? new Sequelize(process.env.DB_URL)
-  : new Sequelize(process.env.DB_NAME || '', process.env.DB_USER || '', process.env.DB_PASSWORD, {
+let sequelize: Sequelize;
+
+// Production environment (Render)
+if (process.env.NODE_ENV === 'production') {
+  sequelize = new Sequelize(process.env.DATABASE_URL!, {
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      },
+      decimalNumbers: true
+    },
+    logging: false
+  });
+} else {
+  // Local development environment
+  sequelize = new Sequelize(process.env.DB_NAME || 'kanban_db', 
+    process.env.DB_USER || 'postgres', 
+    process.env.DB_PASSWORD, {
       host: 'localhost',
       dialect: 'postgres',
       dialectOptions: {
         decimalNumbers: true,
-        ssl: {
-          require: true,
-          rejectUnauthorized: false,
-        }
       },
+      logging: false
     });
+}
 
+// Initialize models
 const User = UserFactory(sequelize);
 const Ticket = TicketFactory(sequelize);
 
-// Define model relationships
+// Set up associations
 User.hasMany(Ticket, { foreignKey: 'assignedUserId' });
-Ticket.belongsTo(User, { foreignKey: 'assignedUserId', as: 'assignedUser' });
+Ticket.belongsTo(User, { foreignKey: 'assignedUserId', as: 'assignedUser'});
+
+// Test database connection
+const testConnection = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connection established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+};
+
+// Run connection test
+testConnection();
 
 export { sequelize, User, Ticket };
