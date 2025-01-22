@@ -8,30 +8,21 @@ import { TicketFactory } from './ticket.js';
 let sequelize: Sequelize;
 
 // Production environment (Render)
-if (process.env.NODE_ENV === 'production') {
-  sequelize = new Sequelize(process.env.DATABASE_URL!, {
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      },
-      decimalNumbers: true
-    },
-    logging: false
-  });
-} else {
-  // Local development environment
-  sequelize = new Sequelize(process.env.DB_NAME || 'kanban_db', 
-    process.env.DB_USER || 'postgres', 
-    process.env.DB_PASSWORD, {
+if (process.env.DB_URL) {
+  sequelize = new Sequelize(process.env.DB_URL); 
+ } else {
+  sequelize = new Sequelize(
+    process.env.DB_NAME || 'kanban_db', 
+    process.env.DB_USER || 'postgress',
+    process.env.DB_PASSWORD || '1234', {
       host: 'localhost',
       dialect: 'postgres',
       dialectOptions: {
         decimalNumbers: true,
       },
       logging: false
-    });
+    },
+  );
 }
 
 // Initialize models

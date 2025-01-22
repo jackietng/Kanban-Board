@@ -28,10 +28,8 @@ This Kanban Task Management App is a secure and efficient solution for organizin
 - Task (ticket) creation, retrieval, updating, and deletion
 - User state management including expiry of JWT due to inactivity
 - Swimlane-based Kanban board visualization
-- Responsive navigation with user profile menu
 - Protected routes for authenticated users
 - Detailed ticket cards with status indicators and assignee information
-- Search, filter, and sort functionality for tickets
 - Create and edit ticket forms with real-time updates
 - Error handling and loading states for improved user experience
 
