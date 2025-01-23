@@ -6,13 +6,6 @@
 3. [Live Demo](#livedemo)
 4. [Installation](#installation)
 5. [Usage](#usage)
-6. [Components](#components)
-7. [Pages](#pages)
-8. [API Modules](#api-modules)
-9. [Authentication](#authentication)
-10. [State Management](#state-management)
-11. [Error Handling and Loading States](#error-handling-and-loading-states)
-12. [Styling](#styling)
 13. [Technologies Used](#technologies-used)
 14. [License](#license)
 15. [Contact](#contact)
@@ -73,69 +66,6 @@ This Kanban Task Management App is a secure and efficient solution for organizin
 5. Edit or delete existing tickets by clicking on the respective options on each ticket card.
 6. Use the search bar, status filter, and sort options to organize and find specific tickets.
 7. Navigate between different pages using the navbar.
-
-## Components
-
-### Navbar
-Navbar allows user to view user logged in and logout functions
-
-### ProtectedRoute
-Ensures routes are only accessible to authenticated users.
-
-### Swimlane
-Represents a column in the Kanban board, displaying tickets of a specific status.
-
-### TicketCard
-Displays individual ticket information with edit and delete options.
-
-## Pages
-
-### Board
-Main page displaying the Kanban board with all tickets. Includes search, filter, and sort functionality.
-
-
-### CreateTicket
-Form page for creating new tickets with fields for name, description, status, and assigned user.
-
-
-### EditTicket
-Form page for editing existing tickets, pre-populated with current ticket data.
-
-
-### ErrorPage
-404 page displayed when a route is not found.
-
-
-### Login
-Authentication page for user login.
-
-
-## API Modules
-
-### authAPI
-Handles user authentication.
-
-### ticketAPI
-Manages CRUD operations for tickets.
-
-### userAPI
-Handles user-related operations.
-
-## Authentication
-
-The app uses JSON Web Tokens (JWT) for authentication. The `Auth` utility in `utils/auth.ts` provides methods for login status checking, token retrieval, and user profile management.
-
-## State Management
-
-The application uses React's built-in state management with hooks (useState, useEffect) for local component state and API data fetching.
-
-## Error Handling and Loading States
-
-Each component and page includes error handling and loading states to provide a smooth user experience and clear feedback on operations.
-
-## Styling
-
-The application uses custom CSS classes for styling components. Each component and page has specific classes for layout and visual design, ensuring a consistent and user-friendly interface.
 
 ## Technologies Used
 
