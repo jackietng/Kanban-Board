@@ -7,7 +7,6 @@ import { TicketFactory } from './ticket.js';
 
 let sequelize: Sequelize;
 
-// Production environment (Render)
 if (process.env.DB_URL) {
   sequelize = new Sequelize(process.env.DB_URL); 
  } else {
@@ -25,15 +24,12 @@ if (process.env.DB_URL) {
   );
 }
 
-// Initialize models
 const User = UserFactory(sequelize);
 const Ticket = TicketFactory(sequelize);
 
-// Set up associations
 User.hasMany(Ticket, { foreignKey: 'assignedUserId' });
 Ticket.belongsTo(User, { foreignKey: 'assignedUserId', as: 'assignedUser'});
 
-// Test database connection
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
@@ -43,7 +39,6 @@ const testConnection = async () => {
   }
 };
 
-// Run connection test
 testConnection();
 
 export { sequelize, User, Ticket };
