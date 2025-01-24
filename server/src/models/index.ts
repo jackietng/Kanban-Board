@@ -18,8 +18,9 @@ if (process.env.DB_URL) {
       dialect: 'postgres',
       dialectOptions: {
         decimalNumbers: true,
+        ssl: false,
       },
-      logging: false
+      logging: false,
     },
   );
 }
